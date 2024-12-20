@@ -22,7 +22,7 @@ export const Menu = ({ label, prediction, result, cleanCanvas, switchLabel, draw
         <div className="text-white bg-white/20 rounded-lg p-4 min-w-[20rem] m-4">
           <details className="cursor-pointer" open={!IS_MOBILE}>
             <summary className="text-lg font-semibold">
-              You need to draw a {label}
+            You need to draw a {label}
               <div className='grid grid-cols-2 gap-2 mt-2'>
                 <button onClick={cleanCanvas} className="bg-red-800 py-1">
                   Clean
