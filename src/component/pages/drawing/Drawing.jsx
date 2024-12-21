@@ -5,6 +5,7 @@ import { TextDisplay } from './TextDisplay';
 import { Error } from '../Error';
 import { Menu } from './Menu';
 import { v4 as uuidv4 } from 'uuid';
+import { Loading } from '../Loading';
 
 const DISPLAY_TEXT_TIME = 2000;
 const WIN_TEXT = '✨🏆✨';
@@ -16,6 +17,7 @@ export const Drawing = () => {
   const [shouldDisplayText, setShouldDisplayText] = useState(false);
   const [shouldDisplayWin, setShouldDisplayWin] = useState(false);
   const [draws, setDraws] = useState([]);
+  const [isWorkerReady, setIsWorkerReady] = useState(false);
   const [prediction, setPrediction] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [result, setResult] = useState(null);
@@ -60,12 +62,12 @@ export const Drawing = () => {
   }, []);
 
   useEffect(() => {
-    if (shouldDisplayText) {
+    if (shouldDisplayText && isWorkerReady) {
       setTimeout(() => {
         setShouldDisplayText(false);
       }, DISPLAY_TEXT_TIME);
     }
-  }, [shouldDisplayText]);
+  }, [shouldDisplayText, isWorkerReady]);
 
   useEffect(() => {
     if (shouldDisplayWin) {
@@ -83,20 +85,24 @@ export const Drawing = () => {
           type: 'module',
         }
       );
+
       worker.current.onmessage = (event) => {
-        if (event.data.length > 0) {
-          const prediction = event.data[0];
+        if (event.data.type === 'status' && event.data.status === 'ready') {
+          setIsWorkerReady(true);
+          setShouldDisplayText(true);
+          defineNextDraw();
+        }
+        if (event.data.type === 'result' && event.data.result.length > 0) {
+          const prediction = event.data.result[0];
           setPrediction(prediction);
           setIsPredicting(false);
         }
       };
+
       worker.current.onerror = (event) => {
         console.error('Worker error:', event);
         setHasError(true);
       };
-
-      setShouldDisplayText(true);
-      defineNextDraw();
     }
   }, [defineNextDraw]);
 
@@ -131,9 +137,12 @@ export const Drawing = () => {
   if (hasError) {
     return <Error />;
   }
+  if (!isWorkerReady) {
+    return <Loading />;
+  }
   return (
     <>
-      <div className="w-full h-full bg-blue-500 absolute top-0 left-0">
+      <div className="w-full h-full bg-blue-300 absolute top-0 left-0">
         <SketchCanvas
           onSketchChange={() => setHasDrawingChanged(true)}
           ref={canvasRef}

@@ -19,18 +19,18 @@ const CardDrawing = ({draw}) => {
 export const Menu = ({ label, prediction, result, cleanCanvas, switchLabel, draws ,time}) => {
     return (
       <div className=" absolute top-0 right-0 ">
-        <div className="text-white bg-white/20 rounded-lg p-4 min-w-[20rem] m-4">
+        <div className="text-black bg-white/20 rounded-lg p-4 min-w-[20rem] m-4">
           <details className="cursor-pointer" open={!IS_MOBILE}>
             <summary className="text-lg font-semibold">
             You need to draw a {label}
               <div className='grid grid-cols-2 gap-2 mt-2'>
-                <button onClick={cleanCanvas} className="bg-red-800 py-1">
+                <button onClick={cleanCanvas} className="bg-red-800 py-1 text-white">
                   Clean
                 </button>
               <ButtonAnimate
                   text={'Change'}
                   onClick={switchLabel}
-                  className={'bg-green-800 py-1'}
+                  className={'bg-green-800 py-1 text-white'}
                   isAnimated={!!result}
                 /> 
                 </div>

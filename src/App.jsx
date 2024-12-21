@@ -1,16 +1,27 @@
-import './App.css'
-import { Routes, Route } from "react-router";
-import { Drawing ,Home} from "./component/pages";
+import { useState } from 'react';
+import './App.css';
+import { Drawing, Home, Error } from './component/pages';
+import { PageContext } from './context';
 
-
+const PageDisplay = ({ page }) => {
+  switch (page) {
+    case '/':
+      return <Home />;
+    case '/drawing':
+      return <Drawing />;
+    default:
+      return <Error />;
+  }
+};
 
 function App() {
+  const [page, setPage] = useState('/');
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="drawing" element={<Drawing />} />
-    </Routes>
-  )
+    <PageContext.Provider value={{ page, setPage }}>
+      <PageDisplay page={page} />
+    </PageContext.Provider>
+  );
 }
 
-export default App
+export default App;
