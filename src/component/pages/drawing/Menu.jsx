@@ -37,7 +37,7 @@ export const Menu = ({ label, prediction, result, cleanCanvas, switchLabel, draw
             </summary>
             <div className="mt-4">
               <div>
-                <p>Prediction : {prediction && prediction.label}</p>
+                <p>Guess : {prediction && prediction.label}</p>
                 <p>Result : {result && `🏆 ${result.label}`}</p>
                 <p>
                   Score : {result && `${convertNumberToPercentage(result.score)}`}

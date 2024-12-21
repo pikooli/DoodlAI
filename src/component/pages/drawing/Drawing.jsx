@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import SketchCanvas from './SketchCanvas';
 import { getLabelRandom } from '../../../utils.js';
-import { TextDisplay } from './TextDisplay';
+import { DisplayElement } from './DisplayElement.jsx';
 import { Error } from '../Error';
 import { Menu } from './Menu';
 import { v4 as uuidv4 } from 'uuid';
@@ -148,8 +148,8 @@ export const Drawing = () => {
           ref={canvasRef}
         />
       </div>
-      {shouldDisplayText && <TextDisplay text={currentDraw.label} />}
-      {shouldDisplayWin && <TextDisplay text={WIN_TEXT} />}
+      {shouldDisplayText && <DisplayElement text={currentDraw.label} />}
+      {shouldDisplayWin && <DisplayElement text={WIN_TEXT} />}
       <Menu
         label={currentDraw.label}
         time={timeSpentDrawing}
