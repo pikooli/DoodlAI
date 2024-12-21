@@ -142,7 +142,8 @@ export const Drawing = () => {
   }
   return (
     <>
-      <div className="w-full h-full bg-blue-300 absolute top-0 left-0">
+    <div className="w-full h-full bg-[url('/bg.png')] bg-gray-300 opacity-30 absolute top-0 left-0"></div>
+      <div className="w-full h-full absolute top-0 left-0">
         <SketchCanvas
           onSketchChange={() => setHasDrawingChanged(true)}
           ref={canvasRef}

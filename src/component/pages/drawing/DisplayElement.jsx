@@ -39,8 +39,7 @@ export const DisplayElement = ({ text }) => {
       className="pointer-events-none absolute w-full h-full flex justify-center items-center"
     >
       <h1
-        style={{ transform: 'translateY(-0.8rem)' }}
-        className="text-5xl md:text-9xl"
+        className="text-5xl md:text-9xl capitalize"
       >
         {text}
       </h1>

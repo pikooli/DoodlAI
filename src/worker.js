@@ -15,7 +15,7 @@ let classifier;
 
 self.addEventListener('message', async (event) => {
   while (!classifier) {
-    await new Promise((resolve) => setTimeout(resolve, 50)); // Wait until classifier is ready
+    await new Promise((resolve) => setTimeout(resolve, 50));
   }
 
   const { image } = event.data;
